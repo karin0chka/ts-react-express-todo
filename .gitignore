@@ -1,0 +1,8 @@
+react/node_modules
+express/node_modules
+dist
+.env
+tsconfig.tsbuildinfo
+logs
+
+*.log

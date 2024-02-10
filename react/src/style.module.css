@@ -1,0 +1,82 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 600px;
+  padding: 10px;
+  color: black;
+  background-color: #f5f2fe;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 10px;
+  font-family: cursive;
+  font-size: 25px;
+}
+.homePageWrapper {
+  min-height: 100%;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 5% 90% 5%;
+  background-color: #f5f2fe;
+  color: #4f6b7c;
+}
+.dashboardStyle {
+  display: grid;
+  grid-template-columns: 400px 400px 0px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(246, 247, 248);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  gap: 10px;
+  width: 100%;
+}
+
+.viewListStyle {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 15px;
+  list-style-type: none;
+  color: #636363;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.button {
+  color: #4f6b7c;
+  font-family: cursive;
+}
+
+
+
+/* Scrollbar style */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
