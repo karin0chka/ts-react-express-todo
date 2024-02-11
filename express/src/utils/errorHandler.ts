@@ -13,7 +13,6 @@ export class AppError extends Error {
 }
 
 export function errorHandler(err: Error | AppError, req: Request, res: Response, next: NextFunction) {
-  console.log("ERROR FIRED", err)
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
       status: "error",

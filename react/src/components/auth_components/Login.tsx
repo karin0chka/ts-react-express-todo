@@ -42,9 +42,8 @@ export default function Login() {
       })
     },
   })
-
+// FIXME Why any
   function logInUser(val: any) {
-    console.log("triggered")
     loginRequest.mutate({
       email: val.email,
       password: val.password,

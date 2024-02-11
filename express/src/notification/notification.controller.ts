@@ -43,9 +43,9 @@ notificationRoute.put(
   "/update/:id",
   jwtAuth,
   catchWrapper(async (req: Request, res: Response) => {
-    const { title, message, is_read } = req.body
-    await NotificationService.update({ title, message, is_read }, +req.params.id)
-    res.status(200)
+    const {is_read } = req.body
+    await NotificationService.update({is_read }, +req.params.id)
+    res.status(200).send()
   })
 )
 
@@ -54,7 +54,7 @@ notificationRoute.delete(
   jwtAuth,
   catchWrapper(async (req: Request, res: Response) => {
     await NotificationService.softDelete(+req.params.id)
-    res.status(200)
+    res.status(200).send()
   })
 )
 

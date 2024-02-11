@@ -1,12 +1,10 @@
 import axios from "axios"
-import { INotification, ITodo } from "../../interfaces/interfaces"
-import { IUser, LoginUser } from "../../interfaces/interfaces"
+import { ITodo, IUser, LoginUser } from "../../interfaces/interfaces"
 import config from "./config"
 import { LocalStorage } from "./handlers"
 
 const api = config.API
 
-const reportId = 1
 axios.defaults.withCredentials = true
 
 axios.interceptors.response.use(
@@ -21,12 +19,10 @@ axios.interceptors.response.use(
       if (status === 200) {
         return axios(error.response.config)
       } else {
-        console.log("Remove on failed refresh")
         LocalStorage.removeUser()
         location.reload()
       }
-    } else {
-      console.log("Remove on failed both")
+    } else if (error.response.status === 401) {
       LocalStorage.removeUser()
       location.reload()
     }
@@ -43,13 +39,11 @@ namespace Auth {
     userDto: Pick<IUser, "email" | "first_name" | "last_name" | "password">
   ) {
     const response = await axios.post(`${api}/auth/register`, userDto)
-    console.log(response.data)
     return response.data
   }
 
   export async function loginUser(user: LoginUser) {
     const response = await axios.post(`${api}/auth/login`, user)
-    console.log(response.data)
     return response.data
   }
   export async function refresh() {
@@ -91,13 +85,10 @@ namespace User {
 namespace Todo {
   export async function createTodo(todo: Pick<ITodo, "title" | "description">) {
     const response = await axios.post(`${api}/todo/`, todo)
-    console.log(response.data)
     return response.data
   }
   export async function updateTodo(todo: ITodo) {
-    console.log(todo.id)
     const response = await axios.put(`${api}/todo/${todo.id}`, todo)
-    console.log(response.data)
     return response.data
   }
 
@@ -112,11 +103,11 @@ namespace Report {
     const response = await axios.post(`${api}/report/create`)
     return response.data
   }
-  export async function readTodo() {
+  export async function readTodo(reportId: number) {
     const response = await axios.get(`${api}/report/read/${reportId}`)
     return response.data
   }
-  export async function updateTodo() {
+  export async function updateTodo(reportId: number) {
     const response = await axios.put(`${api}/report/update/${reportId}`)
     return response.data
   }
@@ -135,12 +126,17 @@ namespace Notification {
     return response.data
   }
 
-  export async function updateNotification(id: Pick<INotification, "id">) {
-    const response = await axios.put(`${api}/notification/update/${id}`)
+  export async function updateNotification(dto: {
+    id: number
+    is_read: boolean
+  }) {
+    const response = await axios.put(`${api}/notification/update/${dto.id}`, {
+      is_read: dto.is_read,
+    })
     return response.data
   }
 
-  export async function deleteNotification(id: Pick<INotification, "id">) {
+  export async function deleteNotification(id: number) {
     const response = await axios.delete(`${api}/notification/delete/${id}`)
     return response.data
   }

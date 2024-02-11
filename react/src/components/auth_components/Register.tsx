@@ -54,7 +54,6 @@ export default function Register() {
   })
 
   function createUser(val: any) {
-    console.log("trigger")
     registerRequest.mutate({
       first_name: val.firstName,
       last_name: val.lastName,

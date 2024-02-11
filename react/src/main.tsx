@@ -50,7 +50,6 @@ const router = createBrowserRouter([
       </>
     ),
     loader: () => {
-      LocalStorage.getUser()
       const user = LocalStorage.getUser()
       if (!user) return redirect("/auth?page=login")
       return null

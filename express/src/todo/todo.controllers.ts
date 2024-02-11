@@ -26,8 +26,6 @@ todoRoute.put(
   isTodoEligible,
   catchWrapper(async (req: Request, res: Response) => {
     const { title, description, is_done } = req.body
-    console.log(+req.params.id)
-    console.log("🚀 ~ catchWrapper ~ ", title, description, is_done)
     await TodoService.updateTodo({ title, description, is_done }, +req.params.id)
     logger.info(`Todo was updated with: ${JSON.stringify({ title, description, is_done })}`, "update todo router")
     res.send("OK")
@@ -39,7 +37,6 @@ todoRoute.delete(
   jwtAuth,
   isTodoEligible,
   catchWrapper(async (req: Request, res: Response) => {
-    console.log(+req.params.id)
     await TodoService.softDelete(+req.params.id)
     logger.info(`Todo was deleted: ${JSON.stringify(+req.params.id)}`, "delete todo router")
     res.send("OK")

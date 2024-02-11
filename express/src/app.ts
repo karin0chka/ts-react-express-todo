@@ -33,7 +33,7 @@ app.use(cors(corsOptions))
 
 const limiter = rateLimit({
   windowMs: 2 * 60 * 1000,
-  max: 20,
+  max: 100,
   message: "Sorry, too many requests(try again after 2 min)",
 })
 app.use(limiter)
