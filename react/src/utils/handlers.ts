@@ -5,7 +5,6 @@ export namespace LocalStorage {
     localStorage.setItem("user", JSON.stringify(user))
   }
 
-
   export function getUser(): IUser | LoginUser | null {
     const user = localStorage.getItem("user")
     if (user) {

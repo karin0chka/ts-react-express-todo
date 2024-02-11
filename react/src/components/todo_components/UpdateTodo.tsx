@@ -43,8 +43,7 @@ export default function UpdateTodo({ todo }: { todo: ITodo }) {
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: [QueryName.GetTodos] })
     },
-    onError(error) {
-      console.log(error)
+    onError() {
       toast({
         title: "Something went wrong",
         status: "error",
@@ -89,7 +88,6 @@ export default function UpdateTodo({ todo }: { todo: ITodo }) {
             initialValues={todo}
             onSubmit={(values, { setSubmitting }) => {
               mutate(values)
-              console.log("->   ", values)
               setSubmitting(false)
             }}
             validationSchema={validationSchema}>

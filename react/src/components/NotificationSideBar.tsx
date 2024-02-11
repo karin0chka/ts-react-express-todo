@@ -14,9 +14,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react"
 import { useEffect, useMemo, useRef, useState } from "react"
-import api from "../utils/api"
 import { INotification } from "../../interfaces/interfaces"
-import { isNotification } from "../utils"
+import { deRef, isNotification } from "../utils/utils"
+import api from "../utils/api"
+import { Notification } from "./Notification"
 
 export function NotificationSideBar() {
   const [tabIndex, setTabIndex] = useState(0)
@@ -29,18 +30,48 @@ export function NotificationSideBar() {
   const btnRef = useRef(null)
 
   const [rawNotifications, setRawNotifications] = useState<INotification[]>([])
-  const activeNotifications = useMemo(
+
+  //return read / unread depending on tabIndex
+  const filteredNotifications = useMemo(
     () => rawNotifications.filter((n) => n.is_read === (tabIndex === 1)),
     [tabIndex, rawNotifications]
   )
 
-  let SSE = useRef<EventSource|null>(null)
+  function updateNotificationList(id: number, type: "update" | "delete") {
+    // unbinding and creating new value in memory, so we can change the raw state, as we can't change raw notification state directly
+    const notifications = deRef(rawNotifications)
+    const index = notifications.findIndex((v) => v.id === id)
+    if (index === -1) {
+      return
+    }
+    if (type === "update") {
+      notifications[index].is_read = !notifications[index].is_read
+      setRawNotifications(notifications)
+    } else {
+      notifications.splice(index, 1)
+      setRawNotifications(notifications)
+    }
+    // TODO investigate why not working
+    // if (type === "update") {
+    //   setRawNotifications((r_n) => {
+    //     r_n[index].is_read = !r_n[index].is_read
+    //     return r_n
+    //   })
+    // } else {
+    //   setRawNotifications((r_n) => {
+    //     r_n.splice(index, 1)
+    //     return r_n
+    //   })
+    // }
+  }
+
+  let SSE = useRef<EventSource | null>(null)
 
   //TODO implement this logic as a hook
   async function fetchData() {
-    console.log("exist", SSE)
+    await new Promise((res) => setTimeout(res, 10))
     if (SSE.current) {
-      SSE.current.close()
+      return
     }
     SSE.current = await api.Notification.connectToNotifications()
 
@@ -64,15 +95,39 @@ export function NotificationSideBar() {
       }
     }
   }
+  const timeout = useRef<NodeJS.Timeout | null>(null)
+
+  function focusEventListener() {
+    if (timeout.current) {
+      clearTimeout(timeout.current)
+    } else {
+      fetchData()
+    }
+  }
+
+  function blurEventListener() {
+    timeout.current = setTimeout(() => {
+      timeout.current = null
+      SSE.current?.close()
+      SSE.current = null
+    }, 1000 * 30)
+  }
 
   useEffect(() => {
-    fetchData()
+    if (document.hasFocus()) fetchData()
+    window.addEventListener("focus", focusEventListener)
+    window.addEventListener("blur", blurEventListener)
+
     return () => {
       if (SSE.current) {
         SSE.current.close()
+        SSE.current = null
       }
+      window.removeEventListener("focus", focusEventListener)
+      window.removeEventListener("blur", blurEventListener)
     }
   }, [])
+
   return (
     <>
       <IconButton
@@ -105,7 +160,15 @@ export function NotificationSideBar() {
                 </TabList>
               </Tabs>
             </Box>
-            <Box>{activeNotifications.length}</Box>
+            <Box>
+              {filteredNotifications.map((n, i) => (
+                <Notification
+                  notification={n}
+                  key={i + "notification"}
+                  updateNotificationList={updateNotificationList}
+                />
+              ))}
+            </Box>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

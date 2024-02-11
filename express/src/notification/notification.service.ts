@@ -16,10 +16,8 @@ class NotificationService {
     )
   }
 
-  async update(notificationDto: Pick<INotification, "title" | "message" | "is_read">, id: number) {
+  async update(notificationDto: Pick<INotification, "is_read">, id: number) {
     return await this.notificationRepository.update(id, {
-      title: notificationDto.title,
-      message: notificationDto.message,
       is_read: notificationDto.is_read,
     })
   }

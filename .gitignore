@@ -1,7 +1,8 @@
 react/node_modules
 express/node_modules
 dist
-.env
+express/.env
+react/.env
 tsconfig.tsbuildinfo
 logs
 

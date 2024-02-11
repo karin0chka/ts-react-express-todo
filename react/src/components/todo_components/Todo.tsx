@@ -20,7 +20,6 @@ export default function Todo({ todo }: { todo: ITodo }) {
   const { mutate, isLoading } = useMutation({
     mutationFn: api.Todo.updateTodo,
     onError(error) {
-      console.log(error)
       toast({
         title: "Something went wrong",
         status: "error",

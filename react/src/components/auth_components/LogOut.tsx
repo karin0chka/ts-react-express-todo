@@ -12,7 +12,6 @@ export default function LogOut() {
     onSuccess() {
       LocalStorage.removeUser()
       navigate("/auth?page=login")
-      console.log(document.cookie)
     },
   })
 
