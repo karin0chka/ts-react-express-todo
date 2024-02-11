@@ -95,16 +95,39 @@ export function NotificationSideBar() {
       }
     }
   }
+  const timeout = useRef<NodeJS.Timeout | null>(null)
+
+  function focusEventListener() {
+    if (timeout.current) {
+      clearTimeout(timeout.current)
+    } else {
+      fetchData()
+    }
+  }
+
+  function blurEventListener() {
+    timeout.current = setTimeout(() => {
+      timeout.current = null
+      SSE.current?.close()
+      SSE.current = null
+    }, 1000 * 30)
+  }
 
   useEffect(() => {
-    fetchData()
+    if (document.hasFocus()) fetchData()
+    window.addEventListener("focus", focusEventListener)
+    window.addEventListener("blur", blurEventListener)
 
     return () => {
       if (SSE.current) {
         SSE.current.close()
+        SSE.current = null
       }
+      window.removeEventListener("focus", focusEventListener)
+      window.removeEventListener("blur", blurEventListener)
     }
   }, [])
+
   return (
     <>
       <IconButton
