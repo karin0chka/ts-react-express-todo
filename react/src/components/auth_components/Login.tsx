@@ -13,6 +13,7 @@ import * as Yup from "yup"
 import style from "../../style.module.css"
 import api from "../../utils/api"
 import { LocalStorage } from "../../utils/handlers"
+import { IUser } from "../../../interfaces/interfaces"
 
 export default function Login() {
   const [_, setSearchParams] = useSearchParams()
@@ -42,8 +43,8 @@ export default function Login() {
       })
     },
   })
-// FIXME Why any
-  function logInUser(val: any) {
+
+  function logInUser(val: Pick<IUser, "email" | "password">) {
     loginRequest.mutate({
       email: val.email,
       password: val.password,
