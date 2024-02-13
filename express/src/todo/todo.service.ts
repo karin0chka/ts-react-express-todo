@@ -21,7 +21,7 @@ namespace TodoService {
       user
     )
 
-    notificaton.user= undefined
+    notificaton.user = undefined
     sendNotificationMessage(user.id, notificaton)
     return todo
   }
@@ -32,6 +32,10 @@ namespace TodoService {
 
   export async function softDelete(id: number) {
     return await myDataSource.getRepository(Todo).softDelete(id)
+  }
+
+  export async function getUserTodos(userID: number) {
+    return await myDataSource.getRepository(Todo).find({ where: { user: { id: userID } }, order: { created_at: "DESC" } })
   }
 }
 

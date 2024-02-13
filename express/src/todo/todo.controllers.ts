@@ -31,6 +31,17 @@ todoRoute.put(
     res.send("OK")
   })
 )
+todoRoute.get(
+  "/",
+  jwtAuth,
+  catchWrapper(async (req: Request, res: Response) => {
+    //@ts-ignore
+    const user = req.user
+    logger.info(`Get User${user.id} todos: ${JSON.stringify(req.body)}`, "user todos router")
+    const todos = await TodoService.getUserTodos(user.id)
+    res.status(200).send(todos)
+  })
+)
 
 todoRoute.delete(
   "/:id",

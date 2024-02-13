@@ -20,11 +20,11 @@ user_router.put(
   "/",
   jwtAuth,
   catchWrapper(async (req: Request, res: Response) => {
-    logger.info(`User data was updated with: ${JSON.stringify(req.body)}`, "user info update router")
     //@ts-ignore
     const userId = req.user.id
-    if ("password" in req.body) delete req.body.password
-    await UserService.updateUserInfo(req.body, userId)
+    const { first_name, last_name, email } = req.body
+    await UserService.updateUserInfo({ first_name, last_name, email }, userId)
+    logger.info(`User data was updated with: ${JSON.stringify({ first_name, last_name, email })}`, "user info update router")
     res.send("User info is successfully changed")
   })
 )
@@ -38,17 +38,6 @@ user_router.delete(
     const userId = req.user.id
     await UserService.deleteUser(userId)
     res.send("User is deleted")
-  })
-)
-user_router.get(
-  "/todos",
-  jwtAuth,
-  catchWrapper(async (req: Request, res: Response) => {
-      //@ts-ignore
-      const user = req.user
-      logger.info(`Get User${user.id} todos: ${JSON.stringify(req.body)}`, "user todos router")
-    const todos = await UserService.getUserTodos(user.id)
-    res.status(200).send(todos)
   })
 )
 
