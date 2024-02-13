@@ -7,8 +7,8 @@ import {
   Spinner,
 } from "@chakra-ui/react"
 import { useQuery } from "react-query"
-import AddTodo from "../components/todo_components/AddTodo"
-import Todo from "../components/todo_components/Todo"
+import AddTodo from "../components/todo/AddTodo"
+import Todo from "../components/todo/Todo"
 import style from "../style.module.css"
 import api from "../utils/api"
 import { QueryName } from "../../interfaces/enum"

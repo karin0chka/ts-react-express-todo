@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"
 import { Button } from "@chakra-ui/react"
 
 export default function LogOut() {
-
   const navigate = useNavigate()
   const logOut = useMutation({
     mutationFn: api.Auth.logOut,
@@ -33,6 +32,7 @@ const button: React.CSSProperties = {
   fontFamily: "cursive",
   color: "black",
   fontSize: 15,
-  padding: "5px",
-  margin: "5px",
+  position: "absolute",
+  bottom: "10px",
+  width: "220px",
 }
