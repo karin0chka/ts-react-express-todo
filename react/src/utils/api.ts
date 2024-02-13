@@ -66,17 +66,14 @@ namespace User {
     const response = await axios.get(`${api}/user/`)
     return response.data
   }
-  export async function updateUserInfo() {
-    //@ts-ignore
-    const response = await axios.put(`${api}/user/:${user.id}`)
+  export async function updateUserInfo(
+    user: Pick<IUser, "first_name" | "last_name" | "email">
+  ) {
+    const response = await axios.put(`${api}/user/`, user)
     return response.data
   }
   export async function deleteUser() {
     const response = await axios.delete(`${api}/user/`)
-    return response.data
-  }
-  export async function userTodos() {
-    const response = await axios.get<any[]>(`${api}/user/todos`)
     return response.data
   }
 }
@@ -94,6 +91,11 @@ namespace Todo {
 
   export async function deleteTodo(todo: ITodo) {
     const response = await axios.delete(`${api}/todo/${todo.id}`)
+    return response.data
+  }
+  export async function userTodos() {
+    const response = await axios.get<any[]>(`${api}/todo`)
+    console.log(response.data)
     return response.data
   }
 }

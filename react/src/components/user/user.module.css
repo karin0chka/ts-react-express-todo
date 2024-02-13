@@ -1,0 +1,55 @@
+.userInfoWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.modal {
+  position: absolute !important;
+  top: 60px;
+  width: 300px;
+  height: 400px;
+  right: -20px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-sizing: content-box;
+}
+
+.navigationWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  padding: 0;
+}
+
+.userChoice {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.editUserInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.styleInput {
+  text-align: center;
+  text-transform: capitalize;
+}
