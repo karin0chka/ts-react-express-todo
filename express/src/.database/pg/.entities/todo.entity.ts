@@ -3,7 +3,6 @@ import Default from "./default.entity"
 import User from "./user.entity"
 import { ITodo } from "../../../../interfaces/entities.interface"
 
-//TODO implement interfaces for entities and create base entity wich will propagate other entities
 @Entity()
 class Todo extends Default implements ITodo {
   @Column()
@@ -14,6 +13,9 @@ class Todo extends Default implements ITodo {
 
   @Column({ default: false })
   is_done: boolean
+
+  @Column({ nullable: true })
+  url: string | null
 
   @ManyToOne(() => User, (user) => user.todos)
   @JoinColumn()

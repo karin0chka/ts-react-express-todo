@@ -1,27 +1,32 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv"
 
-dotenv.config();
+dotenv.config()
 
 interface IConfig {
-  SERVER: { PORT: number; NODE_TYPE: string };
+  SERVER: { PORT: number; NODE_TYPE: string }
   DB: {
     POSTGRES: {
-      HOST: string;
-      PORT: number;
-      DB_NAME: string;
-      USER: string;
-      PASSWORD: string;
-    };
+      HOST: string
+      PORT: number
+      DB_NAME: string
+      USER: string
+      PASSWORD: string
+    }
     MONGO: {
-      URI: string;
-    };
-  };
+      URI: string
+    }
+  }
   JWT: {
-    JWT_SECRET: string;
-    JWT_EXPIRE_TIME: number;
-    JWT_REFRESH_SECRET: string;
-    JWT_REFRESH_EXPIRE_TIME: number;
-  };
+    JWT_SECRET: string
+    JWT_EXPIRE_TIME: number
+    JWT_REFRESH_SECRET: string
+    JWT_REFRESH_EXPIRE_TIME: number
+  }
+  CLOUDINARY: {
+    NAME: string
+    KEY: string
+    SECRET: string
+  }
 }
 
 const config: IConfig = {
@@ -44,6 +49,11 @@ const config: IConfig = {
     JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET!,
     JWT_REFRESH_EXPIRE_TIME: Number(process.env.JWT_REFRESH_EXPIRE_TIME),
   },
-};
+  CLOUDINARY: {
+    NAME: process.env.CLOUDINARY_NAME!,
+    KEY: process.env.CLOUDINARY_KEY!,
+    SECRET: process.env.CLOUDINARY_SECRET!,
+  },
+}
 
-export default config;
+export default config

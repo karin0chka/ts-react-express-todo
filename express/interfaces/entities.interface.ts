@@ -27,6 +27,7 @@ export type ITodo = {
   title: string
   description: string
   is_done: boolean
+  url: string | null
   user: IUser
 } & IDefault
 

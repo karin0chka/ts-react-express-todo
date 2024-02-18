@@ -95,7 +95,6 @@ namespace Todo {
   }
   export async function userTodos() {
     const response = await axios.get<any[]>(`${api}/todo`)
-    console.log(response.data)
     return response.data
   }
 }

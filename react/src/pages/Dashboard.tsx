@@ -18,7 +18,7 @@ export default function Dashboard() {
     data: todos,
     error,
     isLoading,
-  } = useQuery(QueryName.GetTodos, api.User.userTodos)
+  } = useQuery(QueryName.GetTodos, api.Todo.userTodos)
 
 
   
